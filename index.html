@@ -107,6 +107,81 @@
 
   
     
+    <h3 class="article-title"><a href="/2025/01/25/RAG学习（一）/"><span>RAG学习（一）</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2025/01/25/RAG学习（一）/" rel="bookmark">
+        <time class="entry-date published" datetime="2025-01-25T08:21:05.000Z">
+          2025-01-25
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>RAG，英文全称“Retrieval-Augmented Generation”，是一种将信息检索和生成模型相结合的人工智能技术。在信息生成的过程中，利用外部的知识库和文档检索相关的信息，从而提升结果的准确率和可靠性。</p>
+<p>RAG的核心分为两步：</p>
+<ul>
+<li>检索：从知识库（数据库，文档或者网页）上找出对应的数据片段，通常通过一个检索模型实现。</li>
+<li>生成：将问题和检索到的内容结合起来，生成答案。通过了解大模型训练的基础原理可以知道，模型的训练一般都是在有限的数据下完成的，为了生成具有事实性质的内容等，通常还需要通过额外的干预方式进行二次处理，确保输出更加准确和具体的信息。</li>
+</ul>
+<p>RAG的核心技术栈：</p>
+<ul>
+<li>信息检索：将文档信息和查询问题转换为高维度下的向量，通过相似相似度度量来检索最相关的文档，向量还可以存储在专门的向量数据库里面</li>
+<li>自然语言处理：作为RGA技术的生成模型部分，通常利用大型预训练模型进行生成和检索，Transformer架构具体很强的上下文理解能力和生成能力，可以根据输入的上下文信息确保生成内容的流畅性</li>
+<li>多模态信息融合：RAG技术不仅局限于文本信息生成，特定场景下也可以和图片，视频，音频场景结合。相对于结构化的文本，图片处理起来更加复杂，可能需要考虑像素，颜色，形状，纹理等等，我想这也是大模型在这方面进展缓慢的原因吧</li>
+<li>知识增强：检索的知识不仅仅可以用于生成结果，同时也可以用于模型的预训练</li>
+<li>自监督学习：通过让生成任务自我监督（填空任务、句子生成任务等），让生成模型在没有明确标签的未标注数据中学习到大量知识</li>
+<li>自注意力机制：自注意力机制允许模型在生成回答时候关注输入中的所有部分，捕捉到输入数据中长期的依赖关系和上下文信息</li>
+</ul>
+<p>总结，RAG技术核心是检索和生成，通过向量检索，生成模型等方法，可以提升生成结果的准确性。相对于对模型不断进行微调，RAG提供了一种经济高效的方案，赋予了大模型在处理特定提问的时候访问特定数据的能力，在智能客服问答等一些问询场景下有广泛的应用。</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/RAG/">RAG</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/AI/">AI</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2025/01/12/针对AI-code的一些个人思考/"><span>针对AI+code的一些个人思考</span></a></h3>
     
   
