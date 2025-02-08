@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>MySQL索引详解 | Peterliang</title>
+  <title>MySQL索引 | Peterliang</title>
 
   
   <meta name="author" content="Peterliang">
@@ -28,7 +28,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="MySQL索引详解"/>
+  <meta property="og:title" content="MySQL索引"/>
 
   <meta property="og:site_name" content="Peterliang"/>
 
@@ -71,15 +71,15 @@
 
   
     
-    <h3 class="article-title"><span>MySQL索引详解</span></h3>
+    <h3 class="article-title"><span>MySQL索引</span></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2025/02/05/MySQL索引详解/" rel="bookmark">
-        <time class="entry-date published" datetime="2025-02-05T10:14:45.000Z">
-          2025-02-05
+      <a href="/2025/02/08/MySQL索引/" rel="bookmark">
+        <time class="entry-date published" datetime="2025-02-08T14:40:14.000Z">
+          2025-02-08
         </time>
       </a>
     </span>
@@ -115,7 +115,7 @@
 </li>
 </ul>
 </li>
-<li>索引的分类<br><img src="/.com//image-1.png" alt="索引"><ul>
+<li>索引的分类<br> <img src="/2025/02/08/MySQL%E7%B4%A2%E5%BC%95/image-1.png" alt="索引"><ul>
 <li>如上图，索引一般分为主键索引（左边）和非主键索引（右边），主键索引页也称为聚簇索引，非主键索引页成为二级索引。</li>
 <li>在插入数据的时候，InnoDB存储引擎会默认为主键构建一颗索引树。索引的叶子节点存放这这个主键对应的数据</li>
 <li>对于二级索引，二级索引的叶子节点存储的是主键的值。所以如果我们根据二级索引K去检索数据的时候，在查询k索引树之后，会获取到一个主键ID，然后根据主键ID去主键索引树上进行检索，查询到数据返回，这个二次查询的操作我们称为“回表”</li>
@@ -133,7 +133,7 @@
 </ul>
 </li>
 <li>联合索引<ul>
-<li>对于一张数据表，如果我们定义（a,b,c）这三个字段的联合索引，在构建这棵联合索引树的时候，会依次按照字段的顺序进行排序，如下图<br><img src="/.com//image.png" alt="alt text"></li>
+<li>对于一张数据表，如果我们定义（a,b,c）这三个字段的联合索引，在构建这棵联合索引树的时候，会依次按照字段的顺序进行排序，如下图<br><img src="/2025/02/08/MySQL%E7%B4%A2%E5%BC%95/image.png" alt="联合索引"></li>
 <li>按照上面的逻辑，我们可以知道，如果维护了一个(a,b,c)的联合索引，那么其实也就是维护了a,ab,abc这三种索引。也就是可以少维护其余索引</li>
 <li>这也提醒我们在设计联合索引的时候需要考虑到业务场景，按照合适的顺序构建联合索引，避免构建重复索引。</li>
 <li>但是要注意的是，<strong>如果在SQL查询中出现多个列的范围查询，那么索引最多只会用于一个范围列，后续的列无法走到索引了</strong></li>
