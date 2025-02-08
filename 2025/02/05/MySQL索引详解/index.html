@@ -1,0 +1,226 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>MySQL索引详解 | Peterliang</title>
+
+  
+  <meta name="author" content="Peterliang">
+  
+
+  
+  <meta name="description" content="索引的分类
+哈希表
+哈希表是提供一种k-v形式的存储数据结构，通过指定key，可以快速取到对应的值，哈希表核心是需要定义好哈希函数，确保映射的唯一性。但是局限是只适用于等值查询的场景，而且哈希函数不好定义。另外哈希表的查询性能也不是很好，只能通过逐个遍历检索数据。
+
+
+二叉树
+二叉树是一种常见的数据">
+  
+
+  
+  
+  <meta name="keywords" content="database">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="MySQL索引详解"/>
+
+  <meta property="og:site_name" content="Peterliang"/>
+
+  
+  <meta property="og:image" content="/images/logo.png"/>
+  
+
+  <link href="/images/logo.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Peterliang" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Peterliang</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/categories">分类</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>MySQL索引详解</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2025/02/05/MySQL索引详解/" rel="bookmark">
+        <time class="entry-date published" datetime="2025-02-05T10:14:45.000Z">
+          2025-02-05
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <ul>
+<li>索引的分类<ul>
+<li>哈希表<ul>
+<li>哈希表是提供一种k-v形式的存储数据结构，通过指定key，可以快速取到对应的值，哈希表核心是需要定义好哈希函数，确保映射的唯一性。但是局限是只适用于等值查询的场景，而且哈希函数不好定义。另外哈希表的查询性能也不是很好，只能通过逐个遍历检索数据。</li>
+</ul>
+</li>
+<li>二叉树<ul>
+<li>二叉树是一种常见的数据结构，从树根出发，对于树上的每个节点，节点左边的值比当前小，节点右边的值比当前大。为了维持logn的复杂度，就需要利用平衡二叉树，不然树状结构会退化为链表结构。</li>
+<li>对于大量数据的情况，二叉树的高度也会很高，查询一次数据可能需要进行多次IO操作，性能无法稳定保障。</li>
+</ul>
+</li>
+<li>B树<ul>
+<li>B树就是一个树的节点下可能有多个子节点，节点之间有严格排序规则。B树在新插入数据的时候可以保持自平衡，保障树的高度是最小的，以减少查询数据的IO操作。MYSQL的B树非叶子节点也可以存储着数据。</li>
+<li>在数据库中，B树很不稳定，有的时候索引可能命中的非叶子节点，IO次数少，有的时候可能是命中的叶子索引，IO次数多，这样无法保证性能的稳定。同时在范围查询的时候，B树实现起来成本也高，数据可能落于不同的节点下面，导致需要多次进行磁盘IO。</li>
+<li>在有数据变更的时候，树的结构可能会动态调整以保证高度的平衡，树结构的调整会导致出现页分裂或者页合并的情况，同时有可能会往更深层节点进行传递，数据库性能有所影响。</li>
+</ul>
+</li>
+<li>B+树<ul>
+<li>作为B树的改良版，B+树非叶子节点只会存储指针信息，叶子节点才会存储索引数据。同时叶子节点之间还有指针串联起来。这样能确保所有的索引只会落于叶子节点，以保证性能的稳定，同时由于叶子节点之间有指针连接，所以在范围查询的时候，只需要找到范围起点，然后按照指针进行遍历，就可以快速进行范围检索，无需再次进行IO操作。</li>
+<li>对于页分裂的场景，B+树一般只会发生在叶子节点之间，不会向更深层节点传递。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>索引的分类<br><img src="/image-1.png" alt="索引"><ul>
+<li>如上图，索引一般分为主键索引（左边）和非主键索引（右边），主键索引页也称为聚簇索引，非主键索引页成为二级索引。</li>
+<li>在插入数据的时候，InnoDB存储引擎会默认为主键构建一颗索引树。索引的叶子节点存放这这个主键对应的数据</li>
+<li>对于二级索引，二级索引的叶子节点存储的是主键的值。所以如果我们根据二级索引K去检索数据的时候，在查询k索引树之后，会获取到一个主键ID，然后根据主键ID去主键索引树上进行检索，查询到数据返回，这个二次查询的操作我们称为“回表”</li>
+<li>对于二级索引，如果二级索引的值相同，那么<strong>叶子节点上的主键值会按照升序排列</strong></li>
+</ul>
+</li>
+<li>如何减少页分裂<ul>
+<li>使用自增主键：自增主键是递增的，新插入的数据会默认按照主键顺序添加到数据页的末尾，以避免频繁地随机插入导致页分裂</li>
+<li>避免使用UUID作为主键：UUID是随机的，作为主键会使记录被随机插入到数据表里面</li>
+<li>控制字段的长度：尽量避免在表里面使用过长的字段，比如text，blob类型的字段。大字段会占用较多的数据页空间，增加页分裂的可能性</li>
+</ul>
+</li>
+<li>覆盖索引<ul>
+<li>对于SQL<code>select ID from T where k between 3 and 5</code>，由于二级索引查询的时候已经知道了主键ID，那么这个时候不会再进行回表操作，直接返回主键ID</li>
+</ul>
+</li>
+<li>联合索引<ul>
+<li>对于一张数据表，如果我们定义（a,b,c）这三个字段的联合索引，在构建这棵联合索引树的时候，会依次按照字段的顺序进行排序，如下图<br><img src="/image.png" alt="alt text"></li>
+<li>按照上面的逻辑，我们可以知道，如果维护了一个(a,b,c)的联合索引，那么其实也就是维护了a,ab,abc这三种索引。也就是可以少维护其余索引</li>
+<li>这也提醒我们在设计联合索引的时候需要考虑到业务场景，按照合适的顺序构建联合索引，避免构建重复索引。</li>
+<li>但是要注意的是，<strong>如果在SQL查询中出现多个列的范围查询，那么索引最多只会用于一个范围列，后续的列无法走到索引了</strong></li>
+</ul>
+</li>
+<li>索引下推<ul>
+<li>在索引遍历的过程中，对索引中包含的字段先做判断，直接过滤掉不满足条件的记录，减少回表的次数。</li>
+<li>上面提到，二级索引在查询到符合条件的记录的时候，会进行回表操作，然后查询主键索引树进行提交匹配。有了索引下推，就可以减少回表的次数，直接给予索引已有的字段进行过滤</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/MySQL/">MySQL</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/database/">database</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    <p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width="12"/> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33011002017824" target="_blank">浙公网安备33011002017824号</a></p>
+    <a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2021000120号-1</a>
+    </br>
+    
+    &copy; 2025 Peterliang
+    
+  </p>
+</footer>
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=google-peterliang"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'google-peterliang');
+</script>
+
+    
+<script>
+    var _hmt = _hmt || [];
+    ( function () {
+        var hm = document.createElement( "script" );
+        hm.src = "https://hm.baidu.com/hm.js?baidu-peterliang";
+        var s = document.getElementsByTagName( "script" )[ 0 ];
+        s.parentNode.insertBefore( hm, s );
+    } )();
+</script>
+
+  </div>
+</div>
+</body>
+</html>
