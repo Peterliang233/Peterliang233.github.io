@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>RAG论文阅读：Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks | Peterliang</title>
+
+  
+  <meta name="author" content="Peterliang">
+  
+
+  
+  <meta name="description" content="论文地址：https://arxiv.org/pdf/2005.11401
+知乎中文翻译：https://zhuanlan.zhihu.com/p/563941115
+
+作为RAG领域的经典论文，这篇论文核心讨论了RAG模型，文中提到了RAG-序列模型和RAG-token模型以及其核心原理。同时实验对比了RAG和现有的BERT等在NLP多个任务中的表现，表明了RAG模型的可行性和优越性。接下来，将针对论文核心部分做个人学习总结。">
+  
+
+  
+  
+  <meta name="keywords" content="AI">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="RAG论文阅读：Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"/>
+
+  <meta property="og:site_name" content="Peterliang"/>
+
+  
+  <meta property="og:image" content="/images/logo.png"/>
+  
+
+  <link href="/images/logo.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Peterliang" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Peterliang</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/categories">分类</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>RAG论文阅读：Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2025/02/15/RAG论文阅读（一）/" rel="bookmark">
+        <time class="entry-date published" datetime="2025-02-15T10:20:47.000Z">
+          2025-02-15
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <ul>
+<li>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.11401">https://arxiv.org/pdf/2005.11401</a></li>
+<li>知乎中文翻译：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/563941115">https://zhuanlan.zhihu.com/p/563941115</a></li>
+</ul>
+<p>作为RAG领域的经典论文，这篇论文核心讨论了RAG模型，文中提到了RAG-序列模型和RAG-token模型以及其核心原理。同时实验对比了RAG和现有的BERT等在NLP多个任务中的表现，表明了RAG模型的可行性和优越性。接下来，将针对论文核心部分做个人学习总结。</p>
+<span id="more"></span>
+
+<h1 id="前置了解"><a href="#前置了解" class="headerlink" title="前置了解"></a>前置了解</h1><ul>
+<li>大模型虽然取得部分成效，但是针对特定领域，效果还是不如特定领域的模型，目前在知识密集型任务中预训练语言模型如何决策以及如何高效及时更新知识都是还需持续研究的。</li>
+<li>目前特定的领域模型训练成本很高，而且无法保证训练数据的真实性和时效性，想要获得效果好的模型需要不断微调，耗费很多人力物力财力</li>
+</ul>
+<h1 id="原理解析"><a href="#原理解析" class="headerlink" title="原理解析"></a>原理解析</h1><p><img src="/./RAG%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B8%80%EF%BC%89/image.png" alt="alt text"></p>
+<ul>
+<li>RAG的核心分为两部分，检索和生成<ul>
+<li>检索器会根据$p_\eta(z|x)$找出和输入序列$x$最相关的$top-k$个文本段落$z$</li>
+<li>生成器会根据$p_\theta(y_i|x,z,y_{1:i-1})$，也就是根据前面输入序列x，文档z，以及前面生成的i-1个序列进行生成</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/RAG/">RAG</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/AI/">AI</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    <p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width="12"/> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33011002017824" target="_blank">浙公网安备33011002017824号</a></p>
+    <a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2021000120号-1</a>
+    </br>
+    
+    &copy; 2025 Peterliang
+    
+  </p>
+</footer>
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=google-peterliang"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'google-peterliang');
+</script>
+
+    
+<script>
+    var _hmt = _hmt || [];
+    ( function () {
+        var hm = document.createElement( "script" );
+        hm.src = "https://hm.baidu.com/hm.js?baidu-peterliang";
+        var s = document.getElementsByTagName( "script" )[ 0 ];
+        s.parentNode.insertBefore( hm, s );
+    } )();
+</script>
+
+  </div>
+</div>
+</body>
+</html>
