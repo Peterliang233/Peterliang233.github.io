@@ -90,14 +90,12 @@
 <p>prompt的组成部分:</p>
 <ul>
 <li>角色</li>
-<li>指令&#x2F;任务</li>
+<li>指令/任务</li>
 <li>问题</li>
 <li>上下文</li>
 <li>示例</li>
 </ul>
-<p>比如以下prompt：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">你是一位数学领域的专家（角色），你需要帮助解决用户的数学问题（任务）。</span><br><span class="line">已知一种运算法则，有三个变量，A，B，C，当A=1，B=1的时候，C=0；当A=1，B=0的时候，C=1。（示例）</span><br><span class="line">现在，请你帮忙告诉我当A=0，B=0的时候，C等于多少？（问题）</span><br></pre></td></tr></table></figure>
-<p>然后我们可以进行追问，A&#x3D;0，B&#x3D;1的时候，C等于多少？这样gpt会根据上下文信息继续生成回复。<br>ps：这个prompt让我想起来高中写语文作文的时候，经常就是一段文字，然后给出一些要求，最后根据这个引发联想，写一篇800字的作文，感觉还挺像的。</p>
+<p>比如以下prompt：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">你是一位数学领域的专家（角色），你需要帮助解决用户的数学问题（任务）。</span><br><span class="line">已知一种运算法则，有三个变量，A，B，C，当A=1，B=1的时候，C=0；当A=1，B=0的时候，C=1。（示例）</span><br><span class="line">现在，请你帮忙告诉我当A=0，B=0的时候，C等于多少？（问题）</span><br></pre></td></tr></table></figure><br>然后我们可以进行追问，A=0，B=1的时候，C等于多少？这样gpt会根据上下文信息继续生成回复。<br>ps：这个prompt让我想起来高中写语文作文的时候，经常就是一段文字，然后给出一些要求，最后根据这个引发联想，写一篇800字的作文，感觉还挺像的。</p>
 <p>值得注意的点是，大模型的使用始终绕不过的一个问题就是安全。大模型生成的任务是无法保证完全准确的，里面可能存在偏见，虚假的信息，训练不当也可能造成数据泄漏。用户可以利用prompt欺骗LLMs绕过风控拦截，使其生成不合规的内容。大模型安全也是一个很有研究意义的领域。</p>
 <p>比如chatgpt，豆包等这种的，其实都是一个智能体agent。其实我们也可以一些AI应用开发平台（如coze）自己搭建一个agent智能体。在配置的时候以下参数需要注意：</p>
 <ul>
@@ -188,5 +186,20 @@
 
   </div>
 </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>

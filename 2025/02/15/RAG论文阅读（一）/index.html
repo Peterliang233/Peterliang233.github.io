@@ -92,14 +92,12 @@
 <li>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2005.11401">https://arxiv.org/pdf/2005.11401</a></li>
 <li>知乎中文翻译：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/563941115">https://zhuanlan.zhihu.com/p/563941115</a></li>
 </ul>
-<p>作为RAG领域的经典论文，这篇论文核心讨论了RAG模型，文中提到了RAG-序列模型和RAG-token模型以及其核心原理。同时实验对比了RAG和现有的BERT等在NLP多个任务中的表现，表明了RAG模型的可行性和优越性。接下来，将针对论文核心部分做个人学习总结。</p>
-<span id="more"></span>
-
+<p>作为RAG领域的经典论文，这篇论文核心讨论了RAG模型，文中提到了RAG-序列模型和RAG-token模型以及其核心原理。同时实验对比了RAG和现有的BERT等在NLP多个任务中的表现，表明了RAG模型的可行性和优越性。接下来，将针对论文核心部分做个人学习总结。<br><span id="more"></span></p>
 <h1 id="前置了解"><a href="#前置了解" class="headerlink" title="前置了解"></a>前置了解</h1><ul>
 <li>大模型虽然取得部分成效，但是针对特定领域，效果还是不如特定领域的模型，目前在知识密集型任务中预训练语言模型如何决策以及如何高效及时更新知识都是还需持续研究的。</li>
 <li>目前特定的领域模型训练成本很高，而且无法保证训练数据的真实性和时效性，想要获得效果好的模型需要不断微调，耗费很多人力物力财力</li>
 </ul>
-<h1 id="原理解析"><a href="#原理解析" class="headerlink" title="原理解析"></a>原理解析</h1><p><img src="/2025/02/15/RAG%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%88%E4%B8%80%EF%BC%89/RAG-1.png" alt="RAG原理"></p>
+<h1 id="原理解析"><a href="#原理解析" class="headerlink" title="原理解析"></a>原理解析</h1><p><img src="RAG-1.png" alt="RAG原理"></p>
 <ul>
 <li>RAG的核心分为两部分，检索和生成<ul>
 <li>检索器会根据$p_\eta(z|x)$找出和输入序列$x$最相关的$top-k$个文本段落$z$</li>
@@ -184,5 +182,20 @@
 
   </div>
 </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>

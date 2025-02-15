@@ -96,7 +96,6 @@ RAG的核心分为两步：
 <li>生成：将问题和检索到的内容结合起来，生成答案。通过了解大模型训练的基础原理可以知道，模型的训练一般都是在有限的数据下完成的，为了生成具有事实性质的内容等，通常还需要通过额外的干预方式进行二次处理，确保输出更加准确和具体的信息。</li>
 </ul>
 <span id="more"></span>
-
 <p>RAG的核心技术栈：</p>
 <ul>
 <li>信息检索：将文档信息和查询问题转换为高维度下的向量，通过相似相似度度量来检索最相关的文档，向量还可以存储在专门的向量数据库里面</li>
@@ -184,5 +183,20 @@ RAG的核心分为两步：
 
   </div>
 </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
