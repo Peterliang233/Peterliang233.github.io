@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>lab1 | Peterliang</title>
+
+  
+  <meta name="author" content="Peterliang">
+  
+
+  
+  <meta name="description" content="实验背景
+https://pdos.csail.mit.edu/6.824/labs/lab-mr.html
+使用Golang利用RPC的方式实现MapReduce操作，通过搭建一个分布式集群，使用一个master来分发不同的任务，不同worker来共同获取任务并执行">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="lab1"/>
+
+  <meta property="og:site_name" content="Peterliang"/>
+
+  
+  <meta property="og:image" content="/images/logo.png"/>
+  
+
+  <link href="/images/logo.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Peterliang" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Peterliang</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/categories">分类</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>lab1</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2022/11/23/lab1/" rel="bookmark">
+        <time class="entry-date published" datetime="2022-11-23T14:00:02.000Z">
+          2022-11-23
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="实验背景"><a href="#实验背景" class="headerlink" title="实验背景"></a>实验背景</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/labs/lab-mr.html">https://pdos.csail.mit.edu/6.824/labs/lab-mr.html</a></li>
+<li>使用Golang利用RPC的方式实现MapReduce操作，通过搭建一个分布式集群，使用一个master来分发不同的任务，不同worker来共同获取任务并执行<span id="more"></span>
+<h1 id="实验原理"><a href="#实验原理" class="headerlink" title="实验原理"></a>实验原理</h1></li>
+<li>MapReduce主要分为两个部分<ul>
+<li>map部分：一个文件有一个map任务处理，map任务是通过将数据源分到不同的临时文件里面，这里的临时文件的命名方法为tmp-x-y，其中x是指当前的map任务的taskID,y指的是放到了第几个桶里面（这里的桶的格式为nReduce），这个第几个桶也是对应的Reduce任务的编号</li>
+<li>Reduce部分：Reduce任务是对涉及到的临时文件的数据进行处理，比如求和，求平均值等等，Reduce需要等到所有的Map任务都执行完成之后才开始执行，而对于taskId为x的Reduce任务，这个任务处理的临时文件需要满足文件的名称为tmpo-*-x，这个*是一个通配符，因为一个Reduce任务可以放到很多个桶里面，所以一个桶也存放了很多个Map任务处理出来的临时键值对。Reduce任务就是将一个桶的所有的键值对进行处理。<br><img src="image.png" alt="alt text"><h1 id="实验过程"><a href="#实验过程" class="headerlink" title="实验过程"></a>实验过程</h1><h2 id="Master节点设计"><a href="#Master节点设计" class="headerlink" title="Master节点设计"></a>Master节点设计</h2><h3 id="设计原理"><a href="#设计原理" class="headerlink" title="设计原理"></a>设计原理</h3></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Master节点主要的工作是如何调度一个任务，各个worker节点通过RPC请求调用相关函数向master节点请求任务执行。Master节点这边需要提供两个函数GetTask和SetTask。<ul>
+<li>GetTask函数用来给各个worker分配任务进行处理，这里我们需要先保证Map类型的任务被执行完成，然后才能执行Reduce任务。同时还需要考虑到执行超时的任务，在GetTask函数执行的前期，需要先将当前超时的任务收集起来（我这里设置的超时时间是10s）</li>
+<li>当我们的的某一个worker的节点执行完成某一个任务之后，我们需要调用SetTask函数告知Master节点这个任务执行完成了</li>
+</ul>
+</li>
+<li>注意这里的每个worker节点执行的时候都是并行处理的，所以需要引入互斥锁控制并发</li>
+<li>在所有的任务执行完成之后调用的Done()函数需要使用锁控制<h2 id="任务设计"><a href="#任务设计" class="headerlink" title="任务设计"></a>任务设计</h2></li>
+<li>为了方便Master节点进行任务调度，需要设计Task任务具有哪些属性。本来按照正常的话我们需要将Map任务和Reduce任务的属性分开设计的，但是这里为了方便我们将Map和Reduce任务用同一种对象进行设计，具体设计如下：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 任务主要分为两种任务，一种是Map任务，主要是将数据进行分桶处理，另一种是Reduce任务，是进行统一的求和计数的操作</span><br><span class="line">type TaskInfo struct &#123;</span><br><span class="line">    FileName string  // 一个任务处理一个文件的数据</span><br><span class="line">    TaskType int // 任务的类型， 1-Map任务，2-Recude任务 3-Wait任务 4-Done任务</span><br><span class="line">    TaskID int // 任务的ID，用来唯一表示一个任务</span><br><span class="line">    NReduce int // reduce任务的个数</span><br><span class="line">    NMap int // map任务的个数，有几个需要读入的文件就有几个map任务</span><br><span class="line">    TimeStamp int64 // 任务的执行时间，用来感知执行的任务是否超时</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Map-Worker节点设计"><a href="#Map-Worker节点设计" class="headerlink" title="Map Worker节点设计"></a>Map Worker节点设计</h2></li>
+<li>Map节点的处理逻辑是每个Map任务去处理一个文件，Map任务和文件的关系是一一映射的关系。当Map任务从Master节点获取到任务之后，首先我们需要加载wc.so插件将文件里面的所有的字符都存放到一个大切片里面，然后将这个大切片利用哈希函数进行分桶操作放到nReduce个桶里面，这里还需要将数据进行持久化操作，所以还需要将每个桶的切片的数据都写入到临时文件里面，里面的存储的方式为json的格式</li>
+<li>由于这里的写入临时文件的数据在之后进行Reduce任务的时候还需要进行读取，所以这里我们需要可以查找到Reduce任务应该处理哪些文件，这里文件之间不能冲突。这里的文件的命名方法为mr-{map_taskid}-{reduce_idx}，加入我们的Map任务的taskid为x，那么我们需要写入的临时文件的文件名为:mr-x-0,mx-x-1,mr-x-2,….,mr-x-(nReduce-1)，所以这个Map任务需要写入一共nReduce个临时文件<h2 id="Reduce-Worker节点设计"><a href="#Reduce-Worker节点设计" class="headerlink" title="Reduce Worker节点设计"></a>Reduce Worker节点设计</h2></li>
+<li>Reduce节点的处理逻辑是每个Reduce任务去读取对应的临时文件进行处理，这里假设我们当前的Reduce的任务ID为x，那么我们这个Reduce任务需要读取的临时文件有mr-0-x,mr-1-x,mr-2-x,…,mr-(nMap-1)-x，所以这个Reduce任务需要读取一共nMap个临时文件。</li>
+<li>由于我们进行哈希的时候是对key进行哈希然后对nReduce取模，所以我们可以保证在Map任务执行完成之后这些，一种key只能被一个Reduce任务执行。同样我们需要将最终的结果写入mr-out-x文件里面，所以最后我们会得到nReduce个最终的文件。</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    <p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width="12"/> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33011002017824" target="_blank">浙公网安备33011002017824号</a></p>
+    <a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2021000120号-1</a>
+    </br>
+    
+    &copy; 2025 Peterliang
+    
+  </p>
+</footer>
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=google-peterliang"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'google-peterliang');
+</script>
+
+    
+<script>
+    var _hmt = _hmt || [];
+    ( function () {
+        var hm = document.createElement( "script" );
+        hm.src = "https://hm.baidu.com/hm.js?baidu-peterliang";
+        var s = document.getElementsByTagName( "script" )[ 0 ];
+        s.parentNode.insertBefore( hm, s );
+    } )();
+</script>
+
+  </div>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
