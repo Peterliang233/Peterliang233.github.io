@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>lab1 | Peterliang</title>
+  <title>MIT 6.824 lab1 | Peterliang</title>
 
   
   <meta name="author" content="Peterliang">
@@ -12,7 +12,8 @@
   
   <meta name="description" content="实验背景
 https://pdos.csail.mit.edu/6.824/labs/lab-mr.html
-使用Golang利用RPC的方式实现MapReduce操作，通过搭建一个分布式集群，使用一个master来分发不同的任务，不同worker来共同获取任务并执行">
+使用Golang利用RPC的方式实现MapReduce操作，通过搭建一个分布式集群，使用一个master来分发不同的任务，不同worker来共同获取任务并执行
+实现代码：https://github.com/Peterliang233/MIT-6.824">
   
 
   
@@ -24,7 +25,7 @@ https://pdos.csail.mit.edu/6.824/labs/lab-mr.html
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="lab1"/>
+  <meta property="og:title" content="MIT 6.824 lab1"/>
 
   <meta property="og:site_name" content="Peterliang"/>
 
@@ -71,7 +72,7 @@ https://pdos.csail.mit.edu/6.824/labs/lab-mr.html
 
   
     
-    <h3 class="article-title"><span>lab1</span></h3>
+    <h3 class="article-title"><span>MIT 6.824 lab1</span></h3>
     
   
 
@@ -93,7 +94,8 @@ https://pdos.csail.mit.edu/6.824/labs/lab-mr.html
       
         <h1 id="实验背景"><a href="#实验背景" class="headerlink" title="实验背景"></a>实验背景</h1><ul>
 <li><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/labs/lab-mr.html">https://pdos.csail.mit.edu/6.824/labs/lab-mr.html</a></li>
-<li>使用Golang利用RPC的方式实现MapReduce操作，通过搭建一个分布式集群，使用一个master来分发不同的任务，不同worker来共同获取任务并执行<span id="more"></span>
+<li>使用Golang利用RPC的方式实现MapReduce操作，通过搭建一个分布式集群，使用一个master来分发不同的任务，不同worker来共同获取任务并执行</li>
+<li>实现代码：<a target="_blank" rel="noopener" href="https://github.com/Peterliang233/MIT-6.824">https://github.com/Peterliang233/MIT-6.824</a><span id="more"></span>
 <h1 id="实验原理"><a href="#实验原理" class="headerlink" title="实验原理"></a>实验原理</h1></li>
 <li>MapReduce主要分为两个部分<ul>
 <li>map部分：一个文件有一个map任务处理，map任务是通过将数据源分到不同的临时文件里面，这里的临时文件的命名方法为tmp-x-y，其中x是指当前的map任务的taskID,y指的是放到了第几个桶里面（这里的桶的格式为nReduce），这个第几个桶也是对应的Reduce任务的编号</li>
