@@ -639,6 +639,65 @@ mjx-container[display="true"] + br {
 
   
     
+    <h3 class="article-title"><a href="/2022/11/24/lab2/"><span>MIT 6.824 lab2</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2022/11/24/lab2/" rel="bookmark">
+        <time class="entry-date published" datetime="2022-11-24T14:16:03.000Z">
+          2022-11-24
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="实验背景"><a href="#实验背景" class="headerlink" title="实验背景"></a>实验背景</h1><ul>
+<li>在大部分分布式场景中，往往采用的是多个不同的节点共同运作一个系统，大部分采用的是一主多从的方案，即一个主节点（Leader），多个从节点（Follow）节点。主节点承担着响应客户端请求的职责，主节点需要将数据备份给从节点，防止数据丢失等。然而，集群的运作往往意味着可能出现的不一致问题，本次我们研究讨论的raft算法就是为了解决分布式场景下的一致性问题。</li>
+<li>raft算法是一种一致性算法，相对于比较经典的分布式算法Paxos算法，raft算法比较简单，相对更加容易理解，同时实现成本比Raft算法更低。</li>
+<li>实验详细说明参照：<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/labs/lab-raft.html">https://pdos.csail.mit.edu/6.824/labs/lab-raft.html</a></li>
+<li>实现代码: <a target="_blank" rel="noopener" href="https://github.com/Peterliang233/MIT-6.824/tree/main">https://github.com/Peterliang233/MIT-6.824/tree/main</a>
+        
+          <p><a class="excerpt-btn" href="/2022/11/24/lab2/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/分布式/">分布式</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2022/11/23/lab1/"><span>MIT 6.824 lab1</span></a></h3>
     
   
@@ -676,6 +735,13 @@ mjx-container[display="true"] + br {
 
     
 
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/分布式/">分布式</a>
+    </span>
     
 
     </div>
