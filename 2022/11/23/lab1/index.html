@@ -43,7 +43,7 @@ https://pdos.csail.mit.edu/6.824/labs/lab-mr.html
 <!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
 
 
-<body>
+<body class="">
 <div class="blog">
   <div class="content">
 
@@ -71,6 +71,7 @@ https://pdos.csail.mit.edu/6.824/labs/lab-mr.html
     <article>
 
   
+  
     
     <h3 class="article-title"><span>MIT 6.824 lab1</span></h3>
     
@@ -85,6 +86,7 @@ https://pdos.csail.mit.edu/6.824/labs/lab-mr.html
       </a>
     </span>
   </div>
+  
 
 
   
@@ -126,6 +128,8 @@ https://pdos.csail.mit.edu/6.824/labs/lab-mr.html
 <li>Reduce节点的处理逻辑是每个Reduce任务去读取对应的临时文件进行处理，这里假设我们当前的Reduce的任务ID为x，那么我们这个Reduce任务需要读取的临时文件有mr-0-x,mr-1-x,mr-2-x,…,mr-(nMap-1)-x，所以这个Reduce任务需要读取一共nMap个临时文件。</li>
 <li>由于我们进行哈希的时候是对key进行哈希然后对nReduce取模，所以我们可以保证在Map任务执行完成之后这些，一种key只能被一个Reduce任务执行。同样我们需要将最终的结果写入mr-out-x文件里面，所以最后我们会得到nReduce个最终的文件。</li>
 </ul>
+
+        
 
       
     </div>

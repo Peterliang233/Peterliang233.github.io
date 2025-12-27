@@ -26,6 +26,7 @@ body .blog {
   min-height: 100vh;
   background-color: #fff;
   margin: 0 auto;
+  box-shadow: 0 0 50px rgba(0,0,0,0.03);
 }
 body .blog .content {
   box-sizing: border-box;
@@ -33,6 +34,12 @@ body .blog .content {
   width: 100%;
   padding: 80px 10px 10px;
   margin: 0 auto;
+}
+body .blog .content .site-main {
+  margin-top: 2rem;
+}
+.home-template body .blog .content .site-main {
+  margin-top: 6rem;
 }
 @media (prefers-color-scheme: dark) {
   body {
