@@ -577,7 +577,7 @@ article {
 article a {
   color: #4a90e2;
 }
-article:hover {
+.home-template article:hover {
   background-color: rgba(255,255,255,0.5);
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0,0,0,0.05);
