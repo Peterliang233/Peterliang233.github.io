@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>SFT实践 | Peterliang</title>
+
+  
+  <meta name="author" content="Peterliang">
+  
+
+  
+  <meta name="description" content="SFT，全称是Supervised Fine-Tuning，监督微调。个人理解就是通过对预计预训练好的大模型做二次训练，让大模型从一个全能型人才转为特定领域的专家，是一个从通才转为专才的过程。举个例子，大模型A在数学微积分方面只能拿到80分，模型幻觉率5%，通过对模型进行微调，理论上是可以让他在微积">
+  
+
+  
+  
+  <meta name="keywords" content="AI,SFT">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="SFT实践"/>
+
+  <meta property="og:site_name" content="Peterliang"/>
+
+  
+  <meta property="og:image" content="/images/logo.png"/>
+  
+
+  <link href="/images/logo.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Peterliang" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body class="">
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Peterliang</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/categories">分类</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+  
+    
+    <h3 class="article-title"><span>SFT实践</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2025/11/03/SFT实践/" rel="bookmark">
+        <time class="entry-date published" datetime="2025-11-03T09:02:58.000Z">
+          2025-11-03
+        </time>
+      </a>
+    </span>
+  </div>
+  
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>SFT，全称是Supervised Fine-Tuning，监督微调。个人理解就是通过对预计预训练好的大模型做二次训练，让大模型从一个全能型人才转为特定领域的专家，是一个从通才转为专才的过程。举个例子，大模型A在数学微积分方面只能拿到80分，模型幻觉率5%，通过对模型进行微调，理论上是可以让他在微积分方面拿到99分，模型幻觉率0.5%，当然这个过程不是那么简单，里面还需要做很多的优化，影响的因素比如数据集的质量，训练轮次，微调方案选型等等。<br>在电商或者商业化业务中，尤其是一些问答类的场景，可以通过使用企业内部私有的知识库数据集，对一些基础模型，比如Qwen-8B，进行私有化部署，然后做SFT，最终可以让模型在回答企业特定场景问题的情况下，做到一个相对更加精准的回复。</p>
+<h1 id="SFT前的准备"><a href="#SFT前的准备" class="headerlink" title="SFT前的准备"></a>SFT前的准备</h1><h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><p>SFT，数据质量是关键，最终效果的好坏很大程度上取决于数据质量，整体上，质大于量，一个普通的SFT，大概准备几千条高质量的数据即可，最常见的格式是<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;messages&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;role&quot;: &quot;system&quot;,</span><br><span class="line">            &quot;content&quot;: &quot;你是一个AI助手&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;role&quot;: &quot;user&quot;,</span><br><span class="line">            &quot;content&quot;: &quot;什么是SFT?&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;role&quot;: &quot;assistant&quot;,</span><br><span class="line">            &quot;content&quot;: &quot;SFT是xxx&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>这里也可以看看<a target="_blank" rel="noopener" href="https://huggingface.co/">HuggingFace</a>上面的一些优质的数据集。<br>数据往往分为训练集，验证集和测试集，分别对应日常学习，模拟考试和期末考试</p>
+<h2 id="机器准备"><a href="#机器准备" class="headerlink" title="机器准备"></a>机器准备</h2><p>我们需要准备有GPU算力的服务器，这里可以用目前主流云平台的一些封装好的能力，还有一种方式是租用GPU，我主要是用autodl这个平台的算力。</p>
+<h1 id="实践一下"><a href="#实践一下" class="headerlink" title="实践一下"></a>实践一下</h1><h1 id="模型部署"><a href="#模型部署" class="headerlink" title="模型部署"></a>模型部署</h1>
+        
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/AI/">AI</a><a href="/tags/SFT/">SFT</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    <p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width="12"/> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33011002017824" target="_blank">浙公网安备33011002017824号</a></p>
+    <a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2021000120号-1</a>
+    </br>
+    
+    &copy; 2026 Peterliang
+    
+  </p>
+</footer>
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=google-peterliang"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'google-peterliang');
+</script>
+
+    
+<script>
+    var _hmt = _hmt || [];
+    ( function () {
+        var hm = document.createElement( "script" );
+        hm.src = "https://hm.baidu.com/hm.js?baidu-peterliang";
+        var s = document.getElementsByTagName( "script" )[ 0 ];
+        s.parentNode.insertBefore( hm, s );
+    } )();
+</script>
+
+  </div>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>MCP原理解析 | Peterliang</title>
+
+  
+  <meta name="author" content="Peterliang">
+  
+
+  
+  <meta name="description" content="MCP，全称是Model Context Protocol，模型上下文协议。他是一种通信协议，约定了AI Agent在使用工具时候的范式。MCP核心分为三个部分，分别是客户端（Client），服务端（Server）和通信协议（Protocol）
+
+客户端：通常指的是LLM应用，比如Cursor，Tr">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="MCP原理解析"/>
+
+  <meta property="og:site_name" content="Peterliang"/>
+
+  
+  <meta property="og:image" content="/images/logo.png"/>
+  
+
+  <link href="/images/logo.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Peterliang" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body class="">
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Peterliang</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/categories">分类</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+  
+    
+    <h3 class="article-title"><span>MCP原理解析</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2025/08/13/MCP原理解析/" rel="bookmark">
+        <time class="entry-date published" datetime="2025-08-13T03:21:12.000Z">
+          2025-08-13
+        </time>
+      </a>
+    </span>
+  </div>
+  
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>MCP，全称是Model Context Protocol，模型上下文协议。他是一种通信协议，约定了AI Agent在使用工具时候的范式。<br>MCP核心分为三个部分，分别是客户端（Client），服务端（Server）和通信协议（Protocol）</p>
+<ul>
+<li>客户端：通常指的是LLM应用，比如Cursor，Trae等等，它负责接收用户输入的指令，并通过模型决策，最终决定什么时候调用工具。</li>
+<li>服务端：提供具体工具和数据源的服务端，它负责执行具体的操作动作，以获取模型需要的结果</li>
+<li>通信协议：连接Client和Server的标准通信范式（基于JSON-RPC 2.0协议），它约定了双方交互的通信方式，包含如何发现工具，传递参数，返回结果等。</li>
+</ul>
+<p>工作流程如下：</p>
+<ul>
+<li>注册：Server启动时候，向Client注册自己提供的工具列表和资源列表</li>
+<li>调用：Client根据用户需求，通过Protocol向Server发送调用请求</li>
+<li>执行：Server端执行工具逻辑（如查询天气，执行代码），并将结果通过Protocol返回给Client端</li>
+<li>处理：Client端根据执行结果进行对应结果</li>
+</ul>
+<p>客户端通过MCP协议将请求发送到Server，是通过一个标准化，基于JSON-RPC 2.0的远程过程调用机制来实现的，这个过程可以分解为几个关键步骤：</p>
+<ul>
+<li>建立连接：Client和Server需要建立一个通信信道，MCP协议不强制规定底层的传输方式，支持多种传输层<ul>
+<li>标准输入/输出（Stdio）：Server作为一个独立的进程启动，Client通过管道与之通信</li>
+<li>HTTP/SSE：Server作为一个网络服务运行，Client通过HTTP请求或者SSE进行通信，适用于单向通信的场景</li>
+<li>WebSocket：适用于需要双向实时通信的场景</li>
+</ul>
+</li>
+<li>协议初始化和工具发现：在进行链路通信之后，Client和Server端会进行初始化握手，Server端会将自己的能力告知Client<ul>
+<li>Server端主动发送一个init初始化请求，将自己支持哪些工具和资源告诉Client端</li>
+</ul>
+</li>
+<li>调用流程：当Client端模型决定使用什么工具之后，他会按照协议发送对应的请求</li>
+</ul>
+<p>这里也写了一个demo，实现了一些Agent一些技术栈的设计：<a target="_blank" rel="noopener" href="https://github.com/Peterliang233/agent-chatbox">https://github.com/Peterliang233/agent-chatbox</a></p>
+
+        
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    <p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width="12"/> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33011002017824" target="_blank">浙公网安备33011002017824号</a></p>
+    <a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2021000120号-1</a>
+    </br>
+    
+    &copy; 2026 Peterliang
+    
+  </p>
+</footer>
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=google-peterliang"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'google-peterliang');
+</script>
+
+    
+<script>
+    var _hmt = _hmt || [];
+    ( function () {
+        var hm = document.createElement( "script" );
+        hm.src = "https://hm.baidu.com/hm.js?baidu-peterliang";
+        var s = document.getElementsByTagName( "script" )[ 0 ];
+        s.parentNode.insertBefore( hm, s );
+    } )();
+</script>
+
+  </div>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

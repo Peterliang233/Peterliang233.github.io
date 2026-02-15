@@ -178,6 +178,152 @@ mjx-container[display="true"] + br {
   
   
     
+    <h3 class="article-title"><a href="/2025/11/03/SFT实践/"><span>SFT实践</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2025/11/03/SFT实践/" rel="bookmark">
+        <time class="entry-date published" datetime="2025-11-03T09:02:58.000Z">
+          2025-11-03
+        </time>
+      </a>
+    </span>
+  </div>
+  
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <div class="entry-content-truncated">
+          
+            <p>SFT，全称是Supervised Fine-Tuning，监督微调。个人理解就是通过对预计预训练好的大模型做二次训练，让大模型从一个全能型人才转为特定领域的专家，是一个从通才转为专才的过程。举个例子，大模型A在数学微积分方面只能拿到80分，模型幻觉率5%，通过对模型进行微调，理论上是可以让他在微积分方面拿到99分，模型幻觉率0.5%，当然这个过程不是那么简单，里面还需要做很多的优化，影响的因素比如数据集的质量，训练轮次，微调方案选型等等。<br>在电商或者商业化业务中，尤其是一些问答类的场景，可以通过使用企业内部私有的知识库数据集，对一些基础模型，比如Qwen-8B，进行私有化部署，然后做SFT，最终可以让模型在回答企业特定场景问题的情况下，做到一个相对更加精准的回复。</p>
+<h1 id="SFT前的准备"><a href="#SFT前的准备" class="headerlink" title="SFT前的准备"></a>SFT前的准备</h1><h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><p>SFT，数据质量是关键，最终效果的好坏很大程度上取决于数据质量，整体上，质大于量，一个普通的SFT，大概准备几千条高质量的数据即可，最常见的格式是<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;messages&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;role&quot;: &quot;system&quot;,</span><br><span class="line">            &quot;content&quot;: &quot;你是一个AI助手&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;role&quot;: &quot;user&quot;,</span><br><span class="line">            &quot;content&quot;: &quot;什么是SFT?&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;role&quot;: &quot;assistant&quot;,</span><br><span class="line">            &quot;content&quot;: &quot;SFT是xxx&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>这里也可以看看<a target="_blank" rel="noopener" href="https://huggingface.co/">HuggingFace</a>上面的一些优质的数据集。<br>数据往往分为训练集，验证集和测试集，分别对应日常学习，模拟考试和期末考试</p>
+<h2 id="机器准备"><a href="#机器准备" class="headerlink" title="机器准备"></a>机器准备</h2><p>我们需要准备有GPU算力的服务器，这里可以用目前主流云平台的一些封装好的能力，还有一种方式是租用GPU，我主要是用autodl这个平台的算力。</p>
+<h1 id="实践一下"><a href="#实践一下" class="headerlink" title="实践一下"></a>实践一下</h1><h1 id="模型部署"><a href="#模型部署" class="headerlink" title="模型部署"></a>模型部署</h1>
+          
+        </div>
+        
+          <p><a class="excerpt-btn" href="/2025/11/03/SFT实践/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/AI/">AI</a><a href="/tags/SFT/">SFT</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+  
+    
+    <h3 class="article-title"><a href="/2025/08/13/MCP原理解析/"><span>MCP原理解析</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2025/08/13/MCP原理解析/" rel="bookmark">
+        <time class="entry-date published" datetime="2025-08-13T03:21:12.000Z">
+          2025-08-13
+        </time>
+      </a>
+    </span>
+  </div>
+  
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <div class="entry-content-truncated">
+          
+            <p>MCP，全称是Model Context Protocol，模型上下文协议。他是一种通信协议，约定了AI Agent在使用工具时候的范式。<br>MCP核心分为三个部分，分别是客户端（Client），服务端（Server）和通信协议（Protocol）</p>
+<ul>
+<li>客户端：通常指的是LLM应用，比如Cursor，Trae等等，它负责接收用户输入的指令，并通过模型决策，最终决定什么时候调用工具。</li>
+<li>服务端：提供具体工具和数据源的服务端，它负责执行具体的操作动作，以获取模型需要的结果</li>
+<li>通信协议：连接Client和Server的标准通信范式（基于JSON-RPC 2.0协议），它约定了双方交互的通信方式，包含如何发现工具，传递参数，返回结果等。</li>
+</ul>
+<p>工作流程如下：</p>
+<ul>
+<li>注册：Server启动时候，向Client注册自己提供的工具列表和资源列表</li>
+<li>调用：Client根据用户需求，通过Protocol向Server发送调用请求</li>
+<li>执行：Server端执行工具逻辑（如查询天气，执行代码），并将结果通过Protocol返回给Client端</li>
+<li>处理：Client端根据执行结果进行对应结果</li>
+</ul>
+<p>客户端通过MCP协议将请求发送到Server，是通过一个标准化，基于JSON-RPC 2.0的远程过程调用机制来实现的，这个过程可以分解为几个关键步骤：</p>
+<ul>
+<li>建立连接：Client和Server需要建立一个通信信道，MCP协议不强制规定底层的传输方式，支持多种传输层<ul>
+<li>标准输入/输出（Stdio）：Server作为一个独立的进程启动，Client通过管道与之通信</li>
+<li>HTTP/SSE：Server作为一个网络服务运行，Client通过HTTP请求或者SSE进行通信，适用于单向通信的场景</li>
+<li>WebSocket：适用于需要双向实时通信的场景</li>
+</ul>
+</li>
+<li>协议初始化和工具发现：在进行链路通信之后，Client和Server端会进行初始化握手，Server端会将自己的能力告知Client<ul>
+<li>Server端主动发送一个init初始化请求，将自己支持哪些工具和资源告诉Client端</li>
+</ul>
+</li>
+<li>调用流程：当Client端模型决定使用什么工具之后，他会按照协议发送对应的请求</li>
+</ul>
+<p>这里也写了一个demo，实现了一些Agent一些技术栈的设计：<a target="_blank" rel="noopener" href="https://github.com/Peterliang233/agent-chatbox">https://github.com/Peterliang233/agent-chatbox</a></p>
+
+          
+        </div>
+        
+          <p><a class="excerpt-btn" href="/2025/08/13/MCP原理解析/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+  
+    
     <h3 class="article-title"><a href="/2025/06/03/Agent论文阅读/"><span>论文阅读-基于大型语言模型的自主智能体调查</span></a></h3>
     
   
@@ -356,166 +502,6 @@ mjx-container[display="true"] + br {
     <span class="post-tags">
       <i class="icon-tags"></i>
         <a href="/tags/AI/">AI</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-  
-    
-    <h3 class="article-title"><a href="/2025/02/08/MySQL索引/"><span>MySQL索引</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2025/02/08/MySQL索引/" rel="bookmark">
-        <time class="entry-date published" datetime="2025-02-08T14:40:14.000Z">
-          2025-02-08
-        </time>
-      </a>
-    </span>
-  </div>
-  
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <div class="entry-content-truncated">
-          
-            <ul>
-<li>索引的分类<ul>
-<li>哈希表<ul>
-<li>哈希表是提供一种k-v形式的存储数据结构，通过指定key，可以快速取到对应的值，哈希表核心是需要定义好哈希函数，确保映射的唯一性。但是局限是只适用于等值查询的场景，而且哈希函数不好定义。另外哈希表的查询性能也不是很好，只能通过逐个遍历检索数据。</li>
-</ul>
-</li>
-<li>二叉树<ul>
-<li>二叉树是一种常见的数据结构，从树根出发，对于树上的每个节点，节点左边的值比当前小，节点右边的值比当前大。为了维持logn的复杂度，就需要利用平衡二叉树，不然树状结构会退化为链表结构。</li>
-<li>对于大量数据的情况，二叉树的高度也会很高，查询一次数据可能需要进行多次IO操作，性能无法稳定保障。</li>
-</ul>
-</li>
-<li>B树<ul>
-<li>B树就是一个树的节点下可能有多个子节点，节点之间有严格排序规则。B树在新插入数据的时候可以保持自平衡，保障树的高度是最小的，以减少查询数据的IO操作。MYSQL的B树非叶子节点也可以存储着数据。</li>
-<li>在数据库中，B树很不稳定，有的时候索引可能命中的非叶子节点，IO次数少，有的时候可能是命中的叶子索引，IO次数多，这样无法保证性能的稳定。同时在范围查询的时候，B树实现起来成本也高，数据可能落于不同的节点下面，导致需要多次进行磁盘IO。</li>
-<li>在有数据变更的时候，树的结构可能会动态调整以保证高度的平衡，树结构的调整会导致出现页分裂或者页合并的情况，同时有可能会往更深层节点进行传递，数据库性能有所影响。</li>
-</ul>
-</li>
-<li>B+树<ul>
-<li>作为B树的改良版，B+树非叶子节点只会存储指针信息，叶子节点才会存储索引数据。同时叶子节点之间还有指针串联起来。这样能确保所有的索引只会落于叶子节点，以保证性能的稳定，同时由于叶子节点之间有指针连接，所以在范围查询的时候，只需要找到范围起点，然后按照指针进行遍历，就可以快速进行范围检索，无需再次进行IO操作。</li>
-<li>对于页分裂的场景，B+树一般只会发生在叶子节点之间，不会向更深层节点传递。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-          
-        </div>
-        
-          <p><a class="excerpt-btn" href="/2025/02/08/MySQL索引/"><span>阅读全文</span></a></p>
-        
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/MySQL/">MySQL</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/database/">database</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-  
-    
-    <h3 class="article-title"><a href="/2025/01/29/prompt修炼手册/"><span>prompt修炼手册</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2025/01/29/prompt修炼手册/" rel="bookmark">
-        <time class="entry-date published" datetime="2025-01-28T16:10:07.000Z">
-          2025-01-29
-        </time>
-      </a>
-    </span>
-  </div>
-  
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <div class="entry-content-truncated">
-          
-            <p>prompt在我们和大模型交互过程中扮演着很重要的一环。简单理解就是GPT是一个知识宝库，我们需要用prompt去告诉大模型我们的诉求，大模型会根据对prompt的理解，生成对应的内容，这里我们通过输入框输出的信息就是我们常说的prompt了。但是prompt的质量也影响着信息生成的质量，学习如何写好prompt对GPT的使用将会大有裨益。</p>
-          
-        </div>
-        
-          <p><a class="excerpt-btn" href="/2025/01/29/prompt修炼手册/"><span>阅读全文</span></a></p>
-        
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/AI/">AI</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/prompt/">prompt</a>
     </span>
     
 
