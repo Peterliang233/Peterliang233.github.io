@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   
@@ -10,31 +10,38 @@
   
 
   
-  <meta name="description" content="MCP，全称是Model Context Protocol，模型上下文协议。他是一种通信协议，约定了AI Agent在使用工具时候的范式。MCP核心分为三个部分，分别是客户端（Client），服务端（Server）和通信协议（Protocol）
-
-客户端：通常指的是LLM应用，比如Cursor，Tr">
+  <meta name="description" content="MCP，全称是Model Context Protocol，模型上下文协议。他是一种通信协议，约定了AI Agent在使用工具时候的范式。MCP核心分为三个部分，分别是客户端（Client），服务端（Server）和通信协议（Protocol） 客户端：通常指的是LLM应用，比如Cursor，Trae等等，它负责接收用">
   
 
   
-  
-  <meta name="keywords" content="">
-  
 
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#4A90E2">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="canonical" href="https://blog.peterliang.top/2025/08/13/MCP%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/">
 
   <meta property="og:title" content="MCP原理解析"/>
-
+  <meta property="og:description" content="MCP，全称是Model Context Protocol，模型上下文协议。他是一种通信协议，约定了AI Agent在使用工具时候的范式。MCP核心分为三个部分，分别是客户端（Client），服务端（Server）和通信协议（Protocol） 客户端：通常指的是LLM应用，比如Cursor，Trae等等，它负责接收用"/>
   <meta property="og:site_name" content="Peterliang"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://blog.peterliang.top/2025/08/13/MCP%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/"/>
+  <meta property="og:image" content="https://blog.peterliang.top/images/logo.png"/>
+  <meta property="article:published_time" content="2025-08-13T11:21:12.000Z"/>
+  <meta property="article:modified_time" content="2026-08-02T02:10:09.924Z"/>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MCP原理解析">
+  <meta name="twitter:description" content="MCP，全称是Model Context Protocol，模型上下文协议。他是一种通信协议，约定了AI Agent在使用工具时候的范式。MCP核心分为三个部分，分别是客户端（Client），服务端（Server）和通信协议（Protocol） 客户端：通常指的是LLM应用，比如Cursor，Trae等等，它负责接收用">
+  <meta name="twitter:image" content="https://blog.peterliang.top/images/logo.png">
 
-  
-  <meta property="og:image" content="/images/logo.png"/>
-  
-
-  <link href="/images/logo.png" rel="icon">
+  <link href="/images/favicon-32.png" rel="icon" sizes="32x32" type="image/png">
+  <link href="/images/logo-192.png" rel="apple-touch-icon">
   <link rel="alternate" href="/atom.xml" title="Peterliang" type="application/atom+xml">
+  <link rel="preload" href="/images/logo-192.png" as="image">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"MCP原理解析","name":"MCP原理解析 | Peterliang","description":"MCP，全称是Model Context Protocol，模型上下文协议。他是一种通信协议，约定了AI Agent在使用工具时候的范式。MCP核心分为三个部分，分别是客户端（Client），服务端（Server）和通信协议（Protocol） 客户端：通常指的是LLM应用，比如Cursor，Trae等等，它负责接收用","url":"https://blog.peterliang.top/2025/08/13/MCP%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/","image":"https://blog.peterliang.top/images/logo.png","author":{"@type":"Person","name":"Peterliang"},"publisher":{"@type":"Person","name":"Peterliang"},"datePublished":"2025-08-13T11:21:12.000Z","dateModified":"2026-08-02T02:10:09.924Z"}</script>
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
@@ -50,7 +57,7 @@
   <div class="site-branding">
     <h1 class="site-title">
       <a href="/">
-        <img class="site-logo" src="/images/logo.png" alt="Peterliang logo">
+        <img class="site-logo" src="/images/logo-192.png" width="48" height="48" alt="Peterliang logo" decoding="async" fetchpriority="high">
         <span>Peterliang</span>
       </a>
     </h1>
@@ -97,7 +104,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p><img src="image-1.png" alt=""></p>
+        <p><img src="image-1.png" alt="" loading="lazy" decoding="async"></p>
 <p>MCP，全称是Model Context Protocol，模型上下文协议。他是一种通信协议，约定了AI Agent在使用工具时候的范式。<br>MCP核心分为三个部分，分别是客户端（Client），服务端（Server）和通信协议（Protocol）</p>
 <ul>
 <li>客户端：通常指的是LLM应用，比如Cursor，Trae等等，它负责接收用户输入的指令，并通过模型决策，最终决定什么时候调用工具。</li>
@@ -157,14 +164,15 @@
 
     <footer class="site-footer">
   <p class="site-info">
-    <p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width="12"/> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33011002017824" target="_blank">浙公网安备33011002017824号</a></p>
-    <a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2021000120号-1</a>
+    <p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width="12" height="12" alt="" loading="lazy" decoding="async"/> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33011002017824" target="_blank" rel="noopener noreferrer">浙公网安备33011002017824号</a></p>
+    <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">赣ICP备2021000120号-1</a>
     </br>
     
     &copy; 2026 Peterliang
     
   </p>
 </footer>
+
     
 <script async src="https://www.googletagmanager.com/gtag/js?id=google-peterliang"></script>
 <script>

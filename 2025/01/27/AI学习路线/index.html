@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   
@@ -10,33 +10,40 @@
   
 
   
-  <meta name="description" content="整理一下自己的AI学习路线，方便后续回溯，也可以给别人一个学习参考
-前置准备
-有一个好的生产工具，效率翻倍，这里推荐Mac+配套显示器
-使用Chrome，国内用户自查使用方式
-使用Github，了解前沿的技术，同时很多开源的模型都可以在这里找到">
+  <meta name="description" content="整理一下自己的AI学习路线，方便后续回溯，也可以给别人一个学习参考 前置准备 有一个好的生产工具，效率翻倍，这里推荐Mac+配套显示器 使用Chrome，国内用户自查使用方式 使用Github，了解前沿的技术，同时很多开源的模型都可以在这里找到">
   
 
-  
   
   <meta name="keywords" content="AI">
   
 
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#4A90E2">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="canonical" href="https://blog.peterliang.top/2025/01/27/AI%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/">
 
   <meta property="og:title" content="AI学习路线（持续更新）"/>
-
+  <meta property="og:description" content="整理一下自己的AI学习路线，方便后续回溯，也可以给别人一个学习参考 前置准备 有一个好的生产工具，效率翻倍，这里推荐Mac+配套显示器 使用Chrome，国内用户自查使用方式 使用Github，了解前沿的技术，同时很多开源的模型都可以在这里找到"/>
   <meta property="og:site_name" content="Peterliang"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://blog.peterliang.top/2025/01/27/AI%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/"/>
+  <meta property="og:image" content="https://blog.peterliang.top/images/logo.png"/>
+  <meta property="article:published_time" content="2025-01-27T15:02:13.000Z"/>
+  <meta property="article:modified_time" content="2025-02-16T13:42:18.811Z"/>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI学习路线（持续更新）">
+  <meta name="twitter:description" content="整理一下自己的AI学习路线，方便后续回溯，也可以给别人一个学习参考 前置准备 有一个好的生产工具，效率翻倍，这里推荐Mac+配套显示器 使用Chrome，国内用户自查使用方式 使用Github，了解前沿的技术，同时很多开源的模型都可以在这里找到">
+  <meta name="twitter:image" content="https://blog.peterliang.top/images/logo.png">
 
-  
-  <meta property="og:image" content="/images/logo.png"/>
-  
-
-  <link href="/images/logo.png" rel="icon">
+  <link href="/images/favicon-32.png" rel="icon" sizes="32x32" type="image/png">
+  <link href="/images/logo-192.png" rel="apple-touch-icon">
   <link rel="alternate" href="/atom.xml" title="Peterliang" type="application/atom+xml">
+  <link rel="preload" href="/images/logo-192.png" as="image">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"AI学习路线（持续更新）","name":"AI学习路线（持续更新） | Peterliang","description":"整理一下自己的AI学习路线，方便后续回溯，也可以给别人一个学习参考 前置准备 有一个好的生产工具，效率翻倍，这里推荐Mac+配套显示器 使用Chrome，国内用户自查使用方式 使用Github，了解前沿的技术，同时很多开源的模型都可以在这里找到","url":"https://blog.peterliang.top/2025/01/27/AI%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/","image":"https://blog.peterliang.top/images/logo.png","author":{"@type":"Person","name":"Peterliang"},"publisher":{"@type":"Person","name":"Peterliang"},"datePublished":"2025-01-27T15:02:13.000Z","dateModified":"2025-02-16T13:42:18.811Z"}</script>
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
@@ -52,7 +59,7 @@
   <div class="site-branding">
     <h1 class="site-title">
       <a href="/">
-        <img class="site-logo" src="/images/logo.png" alt="Peterliang logo">
+        <img class="site-logo" src="/images/logo-192.png" width="48" height="48" alt="Peterliang logo" decoding="async" fetchpriority="high">
         <span>Peterliang</span>
       </a>
     </h1>
@@ -181,14 +188,15 @@
 
     <footer class="site-footer">
   <p class="site-info">
-    <p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width="12"/> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33011002017824" target="_blank">浙公网安备33011002017824号</a></p>
-    <a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2021000120号-1</a>
+    <p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width="12" height="12" alt="" loading="lazy" decoding="async"/> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33011002017824" target="_blank" rel="noopener noreferrer">浙公网安备33011002017824号</a></p>
+    <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">赣ICP备2021000120号-1</a>
     </br>
     
     &copy; 2026 Peterliang
     
   </p>
 </footer>
+
     
 <script async src="https://www.googletagmanager.com/gtag/js?id=google-peterliang"></script>
 <script>

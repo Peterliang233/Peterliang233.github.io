@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   
@@ -10,47 +10,40 @@
   
 
   
-  <meta name="description" content="索引的分类
-哈希表
-哈希表是提供一种k-v形式的存储数据结构，通过指定key，可以快速取到对应的值，哈希表核心是需要定义好哈希函数，确保映射的唯一性。但是局限是只适用于等值查询的场景，而且哈希函数不好定义。另外哈希表的查询性能也不是很好，只能通过逐个遍历检索数据。
-
-
-二叉树
-二叉树是一种常见的数据结构，从树根出发，对于树上的每个节点，节点左边的值比当前小，节点右边的值比当前大。为了维持logn的复杂度，就需要利用平衡二叉树，不然树状结构会退化为链表结构。
-对于大量数据的情况，二叉树的高度也会很高，查询一次数据可能需要进行多次IO操作，性能无法稳定保障。
-
-
-B树
-B树就是一个树的节点下可能有多个子节点，节点之间有严格排序规则。B树在新插入数据的时候可以保持自平衡，保障树的高度是最小的，以减少查询数据的IO操作。MYSQL的B树非叶子节点也可以存储着数据。
-在数据库中，B树很不稳定，有的时候索引可能命中的非叶子节点，IO次数少，有的时候可能是命中的叶子索引，IO次数多，这样无法保证性能的稳定。同时在范围查询的时候，B树实现起来成本也高，数据可能落于不同的节点下面，导致需要多次进行磁盘IO。
-在有数据变更的时候，树的结构可能会动态调整以保证高度的平衡，树结构的调整会导致出现页分裂或者页合并的情况，同时有可能会往更深层节点进行传递，数据库性能有所影响。
-
-
-B+树
-作为B树的改良版，B+树非叶子节点只会存储指针信息，叶子节点才会存储索引数据。同时叶子节点之间还有指针串联起来。这样能确保所有的索引只会落于叶子节点，以保证性能的稳定，同时由于叶子节点之间有指针连接，所以在范围查询的时候，只需要找到范围起点，然后按照指针进行遍历，就可以快速进行范围检索，无需再次进行IO操作。
-对于页分裂的场景，B+树一般只会发生在叶子节点之间，不会向更深层节点传递。">
+  <meta name="description" content="索引的分类 哈希表 哈希表是提供一种k-v形式的存储数据结构，通过指定key，可以快速取到对应的值，哈希表核心是需要定义好哈希函数，确保映射的唯一性。但是局限是只适用于等值查询的场景，而且哈希函数不好定义。另外哈希表的查询性能也不是很好，只能通过逐个遍历检索数据。 二叉树 二叉树是一种常见的数据结构，从树根出发，对于树">
   
 
-  
   
   <meta name="keywords" content="database">
   
 
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#4A90E2">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="canonical" href="https://blog.peterliang.top/2025/02/08/MySQL%E7%B4%A2%E5%BC%95/">
 
   <meta property="og:title" content="MySQL索引"/>
-
+  <meta property="og:description" content="索引的分类 哈希表 哈希表是提供一种k-v形式的存储数据结构，通过指定key，可以快速取到对应的值，哈希表核心是需要定义好哈希函数，确保映射的唯一性。但是局限是只适用于等值查询的场景，而且哈希函数不好定义。另外哈希表的查询性能也不是很好，只能通过逐个遍历检索数据。 二叉树 二叉树是一种常见的数据结构，从树根出发，对于树"/>
   <meta property="og:site_name" content="Peterliang"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://blog.peterliang.top/2025/02/08/MySQL%E7%B4%A2%E5%BC%95/"/>
+  <meta property="og:image" content="https://blog.peterliang.top/images/logo.png"/>
+  <meta property="article:published_time" content="2025-02-08T14:40:14.000Z"/>
+  <meta property="article:modified_time" content="2025-02-09T11:22:30.812Z"/>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MySQL索引">
+  <meta name="twitter:description" content="索引的分类 哈希表 哈希表是提供一种k-v形式的存储数据结构，通过指定key，可以快速取到对应的值，哈希表核心是需要定义好哈希函数，确保映射的唯一性。但是局限是只适用于等值查询的场景，而且哈希函数不好定义。另外哈希表的查询性能也不是很好，只能通过逐个遍历检索数据。 二叉树 二叉树是一种常见的数据结构，从树根出发，对于树">
+  <meta name="twitter:image" content="https://blog.peterliang.top/images/logo.png">
 
-  
-  <meta property="og:image" content="/images/logo.png"/>
-  
-
-  <link href="/images/logo.png" rel="icon">
+  <link href="/images/favicon-32.png" rel="icon" sizes="32x32" type="image/png">
+  <link href="/images/logo-192.png" rel="apple-touch-icon">
   <link rel="alternate" href="/atom.xml" title="Peterliang" type="application/atom+xml">
+  <link rel="preload" href="/images/logo-192.png" as="image">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"MySQL索引","name":"MySQL索引 | Peterliang","description":"索引的分类 哈希表 哈希表是提供一种k-v形式的存储数据结构，通过指定key，可以快速取到对应的值，哈希表核心是需要定义好哈希函数，确保映射的唯一性。但是局限是只适用于等值查询的场景，而且哈希函数不好定义。另外哈希表的查询性能也不是很好，只能通过逐个遍历检索数据。 二叉树 二叉树是一种常见的数据结构，从树根出发，对于树","url":"https://blog.peterliang.top/2025/02/08/MySQL%E7%B4%A2%E5%BC%95/","image":"https://blog.peterliang.top/images/logo.png","author":{"@type":"Person","name":"Peterliang"},"publisher":{"@type":"Person","name":"Peterliang"},"datePublished":"2025-02-08T14:40:14.000Z","dateModified":"2025-02-09T11:22:30.812Z"}</script>
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
@@ -66,7 +59,7 @@ B+树
   <div class="site-branding">
     <h1 class="site-title">
       <a href="/">
-        <img class="site-logo" src="/images/logo.png" alt="Peterliang logo">
+        <img class="site-logo" src="/images/logo-192.png" width="48" height="48" alt="Peterliang logo" decoding="async" fetchpriority="high">
         <span>Peterliang</span>
       </a>
     </h1>
@@ -140,7 +133,7 @@ B+树
 </ul>
 <span id="more"></span>
 <ul>
-<li>索引的分类<br><img src="image-1.png" alt="索引"><ul>
+<li>索引的分类<br><img src="image-1.png" alt="索引" loading="lazy" decoding="async"><ul>
 <li>如上图，索引一般分为主键索引（左边）和非主键索引（右边），主键索引页也称为聚簇索引，非主键索引页成为二级索引。</li>
 <li>在插入数据的时候，InnoDB存储引擎会默认为主键构建一颗索引树。索引的叶子节点存放这这个主键对应的数据</li>
 <li>对于二级索引，二级索引的叶子节点存储的是主键的值。所以如果我们根据二级索引K去检索数据的时候，在查询k索引树之后，会获取到一个主键ID，然后根据主键ID去主键索引树上进行检索，查询到数据返回，这个二次查询的操作我们称为“回表”</li>
@@ -158,7 +151,7 @@ B+树
 </ul>
 </li>
 <li>联合索引<ul>
-<li>对于一张数据表，如果我们定义（a,b,c）这三个字段的联合索引，在构建这棵联合索引树的时候，会依次按照字段的顺序进行排序，如下图<br><img src="image.png" alt="联合索引"></li>
+<li>对于一张数据表，如果我们定义（a,b,c）这三个字段的联合索引，在构建这棵联合索引树的时候，会依次按照字段的顺序进行排序，如下图<br><img src="image.png" alt="联合索引" loading="lazy" decoding="async"></li>
 <li>按照上面的逻辑，我们可以知道，如果维护了一个(a,b,c)的联合索引，那么其实也就是维护了a,ab,abc这三种索引。也就是可以少维护其余索引</li>
 <li>这也提醒我们在设计联合索引的时候需要考虑到业务场景，按照合适的顺序构建联合索引，避免构建重复索引。</li>
 <li>但是要注意的是，<strong>如果在SQL查询中出现多个列的范围查询，那么索引最多只会用于一个范围列，后续的列无法走到索引了</strong></li>
@@ -219,14 +212,15 @@ B+树
 
     <footer class="site-footer">
   <p class="site-info">
-    <p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width="12"/> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33011002017824" target="_blank">浙公网安备33011002017824号</a></p>
-    <a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2021000120号-1</a>
+    <p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width="12" height="12" alt="" loading="lazy" decoding="async"/> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33011002017824" target="_blank" rel="noopener noreferrer">浙公网安备33011002017824号</a></p>
+    <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">赣ICP备2021000120号-1</a>
     </br>
     
     &copy; 2026 Peterliang
     
   </p>
 </footer>
+
     
 <script async src="https://www.googletagmanager.com/gtag/js?id=google-peterliang"></script>
 <script>

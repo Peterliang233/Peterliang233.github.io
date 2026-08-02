@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   
@@ -10,29 +10,40 @@
   
 
   
-  <meta name="description" content="prompt在我们和大模型交互过程中扮演着很重要的一环。简单理解就是GPT是一个知识宝库，我们需要用prompt去告诉大模型我们的诉求，大模型会根据对prompt的理解，生成对应的内容，这里我们通过输入框输出的信息就是我们常说的prompt了。但是prompt的质量也影响着信息生成的质量，学习如何写">
+  <meta name="description" content="prompt在我们和大模型交互过程中扮演着很重要的一环。简单理解就是GPT是一个知识宝库，我们需要用prompt去告诉大模型我们的诉求，大模型会根据对prompt的理解，生成对应的内容，这里我们通过输入框输出的信息就是我们常说的prompt了。但是prompt的质量也影响着信息生成的质量，学习如何写好prompt对GP">
   
 
-  
   
   <meta name="keywords" content="prompt">
   
 
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#4A90E2">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="canonical" href="https://blog.peterliang.top/2025/01/29/prompt%E4%BF%AE%E7%82%BC%E6%89%8B%E5%86%8C/">
 
   <meta property="og:title" content="prompt修炼手册"/>
-
+  <meta property="og:description" content="prompt在我们和大模型交互过程中扮演着很重要的一环。简单理解就是GPT是一个知识宝库，我们需要用prompt去告诉大模型我们的诉求，大模型会根据对prompt的理解，生成对应的内容，这里我们通过输入框输出的信息就是我们常说的prompt了。但是prompt的质量也影响着信息生成的质量，学习如何写好prompt对GP"/>
   <meta property="og:site_name" content="Peterliang"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://blog.peterliang.top/2025/01/29/prompt%E4%BF%AE%E7%82%BC%E6%89%8B%E5%86%8C/"/>
+  <meta property="og:image" content="https://blog.peterliang.top/images/logo.png"/>
+  <meta property="article:published_time" content="2025-01-29T00:10:07.000Z"/>
+  <meta property="article:modified_time" content="2026-08-01T13:58:13.861Z"/>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="prompt修炼手册">
+  <meta name="twitter:description" content="prompt在我们和大模型交互过程中扮演着很重要的一环。简单理解就是GPT是一个知识宝库，我们需要用prompt去告诉大模型我们的诉求，大模型会根据对prompt的理解，生成对应的内容，这里我们通过输入框输出的信息就是我们常说的prompt了。但是prompt的质量也影响着信息生成的质量，学习如何写好prompt对GP">
+  <meta name="twitter:image" content="https://blog.peterliang.top/images/logo.png">
 
-  
-  <meta property="og:image" content="/images/logo.png"/>
-  
-
-  <link href="/images/logo.png" rel="icon">
+  <link href="/images/favicon-32.png" rel="icon" sizes="32x32" type="image/png">
+  <link href="/images/logo-192.png" rel="apple-touch-icon">
   <link rel="alternate" href="/atom.xml" title="Peterliang" type="application/atom+xml">
+  <link rel="preload" href="/images/logo-192.png" as="image">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"prompt修炼手册","name":"prompt修炼手册 | Peterliang","description":"prompt在我们和大模型交互过程中扮演着很重要的一环。简单理解就是GPT是一个知识宝库，我们需要用prompt去告诉大模型我们的诉求，大模型会根据对prompt的理解，生成对应的内容，这里我们通过输入框输出的信息就是我们常说的prompt了。但是prompt的质量也影响着信息生成的质量，学习如何写好prompt对GP","url":"https://blog.peterliang.top/2025/01/29/prompt%E4%BF%AE%E7%82%BC%E6%89%8B%E5%86%8C/","image":"https://blog.peterliang.top/images/logo.png","author":{"@type":"Person","name":"Peterliang"},"publisher":{"@type":"Person","name":"Peterliang"},"datePublished":"2025-01-29T00:10:07.000Z","dateModified":"2026-08-01T13:58:13.861Z"}</script>
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
@@ -48,7 +59,7 @@
   <div class="site-branding">
     <h1 class="site-title">
       <a href="/">
-        <img class="site-logo" src="/images/logo.png" alt="Peterliang logo">
+        <img class="site-logo" src="/images/logo-192.png" width="48" height="48" alt="Peterliang logo" decoding="async" fetchpriority="high">
         <span>Peterliang</span>
       </a>
     </h1>
@@ -162,14 +173,15 @@
 
     <footer class="site-footer">
   <p class="site-info">
-    <p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width="12"/> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33011002017824" target="_blank">浙公网安备33011002017824号</a></p>
-    <a href="https://beian.miit.gov.cn/" target="_blank">赣ICP备2021000120号-1</a>
+    <p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width="12" height="12" alt="" loading="lazy" decoding="async"/> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33011002017824" target="_blank" rel="noopener noreferrer">浙公网安备33011002017824号</a></p>
+    <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">赣ICP备2021000120号-1</a>
     </br>
     
     &copy; 2026 Peterliang
     
   </p>
 </footer>
+
     
 <script async src="https://www.googletagmanager.com/gtag/js?id=google-peterliang"></script>
 <script>
