@@ -83,7 +83,7 @@
   <div class="article-top-meta">
     <span class="posted-on">
       <a href="/2025/08/13/MCP原理解析/" rel="bookmark">
-        <time class="entry-date published" datetime="2025-08-13T03:21:12.000Z">
+        <time class="entry-date published" datetime="2025-08-13T11:21:12.000Z">
           2025-08-13
         </time>
       </a>
@@ -112,16 +112,12 @@
 </ul>
 <p>客户端通过MCP协议将请求发送到Server，是通过一个标准化，基于JSON-RPC 2.0的远程过程调用机制来实现的，这个过程可以分解为几个关键步骤：</p>
 <ul>
-<li>建立连接：Client和Server需要建立一个通信信道，MCP协议不强制规定底层的传输方式，支持多种传输层<ul>
+<li>建立连接：Client和Server需要建立一个通信信道，MCP协议不强制规定底层的传输方式，支持多种传输层</li>
 <li>标准输入/输出（Stdio）：Server作为一个独立的进程启动，Client通过管道与之通信</li>
 <li>HTTP/SSE：Server作为一个网络服务运行，Client通过HTTP请求或者SSE进行通信，适用于单向通信的场景</li>
 <li>WebSocket：适用于需要双向实时通信的场景</li>
-</ul>
-</li>
-<li>协议初始化和工具发现：在进行链路通信之后，Client和Server端会进行初始化握手，Server端会将自己的能力告知Client<ul>
+<li>协议初始化和工具发现：在进行链路通信之后，Client和Server端会进行初始化握手，Server端会将自己的能力告知Client</li>
 <li>Server端主动发送一个init初始化请求，将自己支持哪些工具和资源告诉Client端</li>
-</ul>
-</li>
 <li>调用流程：当Client端模型决定使用什么工具之后，他会按照协议发送对应的请求</li>
 </ul>
 <p>这里也写了一个demo，实现了一些Agent一些技术栈的设计：<a target="_blank" rel="noopener" href="https://github.com/Peterliang233/agent-chatbox">https://github.com/Peterliang233/agent-chatbox</a></p>
