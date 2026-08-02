@@ -44,123 +44,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","headline":"Peterliang","name":"Peterliang","description":"Peterliang 的个人技术博客，记录 AI、后端、数据库、分布式系统与工程实践。","url":"https://blog.peterliang.top/","image":"https://blog.peterliang.top/images/logo.png","author":{"@type":"Person","name":"Peterliang"},"publisher":{"@type":"Person","name":"Peterliang"}}</script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
-
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body class="home-template">
@@ -221,11 +105,7 @@ mjx-container[display="true"] + br {
       
         <div class="entry-content-truncated">
           
-            <p>SFT，全称是Supervised Fine-Tuning，监督微调。个人理解就是通过对预计预训练好的大模型做二次训练，让大模型从一个全能型人才转为特定领域的专家，是一个从通才转为专才的过程。举个例子，大模型A在数学微积分方面只能拿到80分，模型幻觉率5%，通过对模型进行微调，理论上是可以让他在微积分方面拿到99分，模型幻觉率0.5%，当然这个过程不是那么简单，里面还需要做很多的优化，影响的因素比如数据集的质量，训练轮次，微调方案选型等等。<br>在电商或者商业化业务中，尤其是一些问答类的场景，可以通过使用企业内部私有的知识库数据集，对一些基础模型，比如Qwen-8B，进行私有化部署，然后做SFT，最终可以让模型在回答企业特定场景问题的情况下，做到一个相对更加精准的回复。</p>
-<h1 id="SFT前的准备"><a href="#SFT前的准备" class="headerlink" title="SFT前的准备"></a>SFT前的准备</h1><h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><p>SFT，数据质量是关键，最终效果的好坏很大程度上取决于数据质量，整体上，质大于量，一个普通的SFT，大概准备几千条高质量的数据即可，最常见的格式是<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;messages&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;role&quot;: &quot;system&quot;,</span><br><span class="line">            &quot;content&quot;: &quot;你是一个AI助手&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;role&quot;: &quot;user&quot;,</span><br><span class="line">            &quot;content&quot;: &quot;什么是SFT?&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;role&quot;: &quot;assistant&quot;,</span><br><span class="line">            &quot;content&quot;: &quot;SFT是xxx&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>这里也可以看看<a target="_blank" rel="noopener" href="https://huggingface.co/">HuggingFace</a>上面的一些优质的数据集。<br>数据往往分为训练集，验证集和测试集，分别对应日常学习，模拟考试和期末考试</p>
-<h2 id="机器准备"><a href="#机器准备" class="headerlink" title="机器准备"></a>机器准备</h2><p>我们需要准备有GPU算力的服务器，这里可以用目前主流云平台的一些封装好的能力，还有一种方式是租用GPU，我主要是用autodl这个平台的算力。</p>
-<h1 id="实践一下"><a href="#实践一下" class="headerlink" title="实践一下"></a>实践一下</h1><p>细节见：<a target="_blank" rel="noopener" href="https://github.com/Peterliang233/llm-train/tree/main/sft">https://github.com/Peterliang233/llm-train/tree/main/sft</a></p>
-
+            <p>SFT，全称是Supervised Fine-Tuning，监督微调。个人理解就是通过对预计预训练好的大模型做二次训练，让大模型从一个全能型人才转为特定领域的专家，是一个从通才转为专才的过程。举个例子，大模型A在数学微积分方面只能拿到80分，模型幻觉率5%，通过对模型进行微调，理论上是可以让他在微积分方面拿到99分，模型幻觉率0.5%，当然这个过程不是那么简单，里面还需要做很多的优化，影响的因素比如数据集的质量，训练轮次，微调方案选型等...</p>
           
         </div>
         
@@ -286,32 +166,7 @@ mjx-container[display="true"] + br {
       
         <div class="entry-content-truncated">
           
-            <p><img src="image-1.png" alt="" loading="lazy" decoding="async"></p>
-<p>MCP，全称是Model Context Protocol，模型上下文协议。他是一种通信协议，约定了AI Agent在使用工具时候的范式。<br>MCP核心分为三个部分，分别是客户端（Client），服务端（Server）和通信协议（Protocol）</p>
-<ul>
-<li>客户端：通常指的是LLM应用，比如Cursor，Trae等等，它负责接收用户输入的指令，并通过模型决策，最终决定什么时候调用工具。</li>
-<li>服务端：提供具体工具和数据源的服务端，它负责执行具体的操作动作，以获取模型需要的结果</li>
-<li>通信协议：连接Client和Server的标准通信范式（基于JSON-RPC 2.0协议），它约定了双方交互的通信方式，包含如何发现工具，传递参数，返回结果等。</li>
-</ul>
-<p>工作流程如下：</p>
-<ul>
-<li>注册：Server启动时候，向Client注册自己提供的工具列表和资源列表</li>
-<li>调用：Client根据用户需求，通过Protocol向Server发送调用请求</li>
-<li>执行：Server端执行工具逻辑（如查询天气，执行代码），并将结果通过Protocol返回给Client端</li>
-<li>处理：Client端根据执行结果进行对应结果</li>
-</ul>
-<p>客户端通过MCP协议将请求发送到Server，是通过一个标准化，基于JSON-RPC 2.0的远程过程调用机制来实现的，这个过程可以分解为几个关键步骤：</p>
-<ul>
-<li>建立连接：Client和Server需要建立一个通信信道，MCP协议不强制规定底层的传输方式，支持多种传输层</li>
-<li>标准输入/输出（Stdio）：Server作为一个独立的进程启动，Client通过管道与之通信</li>
-<li>HTTP/SSE：Server作为一个网络服务运行，Client通过HTTP请求或者SSE进行通信，适用于单向通信的场景</li>
-<li>WebSocket：适用于需要双向实时通信的场景</li>
-<li>协议初始化和工具发现：在进行链路通信之后，Client和Server端会进行初始化握手，Server端会将自己的能力告知Client</li>
-<li>Server端主动发送一个init初始化请求，将自己支持哪些工具和资源告诉Client端</li>
-<li>调用流程：当Client端模型决定使用什么工具之后，他会按照协议发送对应的请求</li>
-</ul>
-<p>这里也写了一个demo，实现了一些Agent一些技术栈的设计：<a target="_blank" rel="noopener" href="https://github.com/Peterliang233/agent-chatbox">https://github.com/Peterliang233/agent-chatbox</a></p>
-
+            <p>MCP，全称是Model Context Protocol，模型上下文协议。他是一种通信协议，约定了AI Agent在使用工具时候的范式。MCP核心分为三个部分，分别是客户端（Client），服务端（Server）和通信协议（Protocol） 客户端：通常指的是LLM应用，比如Cursor，Trae等等，它负责接收用户输入的指令，并通过模型决策，最终决定什么时候调用工具。 服务端：提供具体工具和数据源的服务端，它负责执行具体的操作动作...</p>
           
         </div>
         
@@ -573,20 +428,5 @@ mjx-container[display="true"] + br {
 
   </div>
 </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
